@@ -1,0 +1,12 @@
+<div class="flex h-screen items-center justify-center">
+  <div class="grid grid-flow-row max-w-xs w-full">
+    <div *ngIf="isLoading">Loading...</div>
+    <div *ngIf="!isLoading">
+      <app-todo
+        *ngFor="let todo of todos"
+        [todo]="todo"
+        (onCompletedChange)="onCompletedChange($event)"
+      ></app-todo>
+    </div>
+  </div>
+</div>

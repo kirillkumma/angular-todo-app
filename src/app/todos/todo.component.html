@@ -1,0 +1,6 @@
+<div
+  class="flex items-center justify-between border border-primary mb-[-1px] p-4"
+>
+  <span>{{ todo.title }}</span>
+  <input type="checkbox" [checked]="todo.completed" (input)="onClick($event)" />
+</div>
