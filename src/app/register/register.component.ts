@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
 
 import { AuthService } from '../services/auth.service';
 
@@ -16,13 +15,7 @@ export class RegisterComponent {
     password: new FormControl(''),
   });
 
-  constructor(private _authService: AuthService, private _router: Router) {
-    this._authService.state.subscribe(({ user }) => {
-      if (user) {
-        this._router.navigateByUrl('/');
-      }
-    });
-  }
+  constructor(private _authService: AuthService) {}
 
   isControlInvalid(name: string) {
     return this.form.controls[name].invalid && this.form.controls[name].touched;
