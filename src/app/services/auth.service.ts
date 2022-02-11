@@ -1,7 +1,7 @@
 import decodeToken from 'jwt-decode';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Subject, catchError, of } from 'rxjs';
+import { Subject, catchError, of, share } from 'rxjs';
 
 interface User {
   id: number;
@@ -28,23 +28,23 @@ export class AuthService {
     return of<AuthResponse>(error);
   }
 
-  private onSuccess({ data }: AuthResponse) {
+  private onSuccess = ({ data }: AuthResponse) => {
     if (data) {
       this.state.next({
         token: data.token,
         user: decodeToken<User>(data.token),
       });
     }
-  }
+  };
 
   register(credentials: { email: string; name: string; password: string }) {
     const res = this._http
       .post<AuthResponse>('/register', credentials, {
         headers: { 'content-type': 'application/json' },
       })
-      .pipe(catchError(this.onError));
+      .pipe(catchError(this.onError), share());
 
-    res.subscribe(this.onSuccess).unsubscribe();
+    res.subscribe(this.onSuccess);
 
     return res;
   }
@@ -54,9 +54,9 @@ export class AuthService {
       .post<AuthResponse>('/login', credentials, {
         headers: { 'content-type': 'application/json' },
       })
-      .pipe(catchError(this.onError));
+      .pipe(catchError(this.onError), share());
 
-    res.subscribe(this.onSuccess).unsubscribe();
+    res.subscribe(this.onSuccess);
 
     return res;
   }
