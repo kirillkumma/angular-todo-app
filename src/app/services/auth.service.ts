@@ -41,6 +41,7 @@ export class AuthService {
     const res = this._http
       .post<AuthResponse>('/register', credentials, {
         headers: { 'content-type': 'application/json' },
+        withCredentials: true,
       })
       .pipe(catchError(this.onError), share());
 
@@ -53,6 +54,19 @@ export class AuthService {
     const res = this._http
       .post<AuthResponse>('/login', credentials, {
         headers: { 'content-type': 'application/json' },
+        withCredentials: true,
+      })
+      .pipe(catchError(this.onError), share());
+
+    res.subscribe(this.onSuccess);
+
+    return res;
+  }
+
+  authenticate() {
+    const res = this._http
+      .post<AuthResponse>('/authenticate', undefined, {
+        withCredentials: true,
       })
       .pipe(catchError(this.onError), share());
 
