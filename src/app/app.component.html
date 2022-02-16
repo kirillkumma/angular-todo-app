@@ -1,1 +1,12 @@
-<router-outlet *ngIf="!(isLoading | async)"></router-outlet>
+<nav
+  *ngIf="!(isLoading | async) && (isAuthenticated | async)"
+  class="fixed top-0 h-12 w-full bg-primary z-10 px-4"
+>
+  <div class="flex items-center justify-between h-full text-white">
+    <span class="text-xl font-bold">AngularTodoApp</span>
+    <button (click)="onLogout()">Logout</button>
+  </div>
+</nav>
+<div class="px-4">
+  <router-outlet *ngIf="!(isLoading | async)"></router-outlet>
+</div>
