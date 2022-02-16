@@ -1,7 +1,7 @@
 import decodeToken from 'jwt-decode';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Subject, catchError, of, share } from 'rxjs';
+import { Subject, catchError, of, share, EMPTY } from 'rxjs';
 
 interface User {
   id: number;
@@ -34,6 +34,8 @@ export class AuthService {
         token: data.token,
         user: decodeToken<User>(data.token),
       });
+    } else {
+      this.state.next({});
     }
   };
 
