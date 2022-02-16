@@ -1,6 +1,27 @@
 <div
-  class="flex items-center justify-between border border-primary mb-[-1px] p-4"
+  class="flex items-center justify-between border border-primary mb-[-1px] p-4 rounded-lg"
 >
-  <span>{{ todo.title }}</span>
-  <input type="checkbox" [checked]="todo.completed" (input)="onClick($event)" />
+  <textarea
+    #title
+    type="text"
+    class="outline-none resize-none border-b border-transparent focus:border-primary transition-colors duration-300"
+    [formControl]="titleControl"
+    [ngClass]="todo.completed ? 'line-through' : ''"
+    (keyup)="onKeyUp()"
+  ></textarea>
+  <div class="flex items-center">
+    <input class="hidden" type="checkbox" [checked]="todo.completed" />
+    <div
+      class="h-6 w-6 p-1 border border-primary rounded-sm cursor-pointer bg-transparent"
+      (click)="onCheckboxClick()"
+    >
+      <div
+        class="w-full h-full rounded-sm"
+        [ngClass]="todo.completed ? 'bg-primary' : ''"
+      ></div>
+    </div>
+    <button class="text-red-500 text-4xl pb-1 ml-2" (click)="onButtonClick()">
+      &#10005;
+    </button>
+  </div>
 </div>
