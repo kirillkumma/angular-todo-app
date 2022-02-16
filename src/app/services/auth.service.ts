@@ -76,4 +76,14 @@ export class AuthService {
 
     return res;
   }
+
+  logout() {
+    const res = this._http
+      .post('/logout', undefined, { withCredentials: true })
+      .pipe(catchError(this.onError), share());
+
+    res.subscribe(() => this.state.next({}));
+
+    return res;
+  }
 }
